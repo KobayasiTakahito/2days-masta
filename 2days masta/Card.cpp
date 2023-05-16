@@ -73,7 +73,7 @@ void Card::Distibute() {
 	}
 }
 //選択
-void Card::Select() {
+bool Card::Select() {
 	static char keys[256] = { 0 };
 	static char preKeys[256] = { 0 };
 	memcpy(preKeys, keys, 256);
@@ -99,12 +99,11 @@ void Card::Select() {
 			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0 && handAlive_[i]) {
 				breakTime_ = hand_[select_];
 				handAlive_[select_] = false;
-				
+				return true;
 			}
 		}
 	}
-
-	
+	return false;
 }
 
 void Card::TutolialCpu() {

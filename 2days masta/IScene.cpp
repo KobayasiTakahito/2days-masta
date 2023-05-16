@@ -35,7 +35,7 @@ void IScene::Run() {
 		
 		break;
 	case Phase::PRE:
-
+		IScene::GameRun();
 		break;
 	case Phase::GAMES:
 
@@ -56,9 +56,14 @@ void IScene::GameRun() {
 	switch (gamePhase_)
 	{
 	case GamePhase::DROW:
-		
+		card_->Shuffile();
+		card_->Distibute();
+		gamePhase_ = GamePhase::SELECT;
 		break;
 	case GamePhase::SELECT:
+		if (card_->Select()) {
+			gamePhase_ = GamePhase::PLAY;
+		}
 
 		break;
 	case GamePhase::PLAY:

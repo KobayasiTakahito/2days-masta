@@ -6,7 +6,7 @@ public:
 	void Initialize();
 	void Shuffile();
 	void Distibute();
-	void Select();
+	bool Select();
 	void TutolialCpu();
 	void Calculation();
 	void Draw();
