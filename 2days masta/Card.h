@@ -2,6 +2,7 @@
 class Card
 {
 public:
+	
 	void Initialize();
 	void Shuffile();
 	void Distibute();
@@ -14,8 +15,7 @@ private:
 	static const int handNum = 5;
 	int number_[maxNum];
 	int textureHandle_[maxNum];
-	int x[maxNum];
-	int y[maxNum];
+	
 	//手札
 	int hand_[handNum];
 	int handAlive_[handNum];

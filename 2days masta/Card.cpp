@@ -3,6 +3,7 @@
 #include<Novice.h>
 #include<time.h>
 
+
 void Card::Initialize() {
 	
 	//手持ち
@@ -27,6 +28,8 @@ void Card::Initialize() {
 	textureHandle_[7] = Novice::LoadTexture("./Resources./card8.png");
 	textureHandle_[8] = Novice::LoadTexture("./Resources./card9.png");
 	textureHandle_[9] = Novice::LoadTexture("./Resources./card10.png");
+	dark_ = Novice::LoadTexture("./Resources./dark.png");
+	//
 
 	time_ = 12;
 	end_ = handNum;
@@ -75,6 +78,7 @@ void Card::Select() {
 	static char preKeys[256] = { 0 };
 	memcpy(preKeys, keys, 256);
 	Novice::GetHitKeyStateAll(keys);
+
 	//右にセレクト
 	if (keys[DIK_D] && preKeys[DIK_D] == 0) {
 		select_ += 1;
@@ -93,12 +97,14 @@ void Card::Select() {
 		//決定
 		for (int i = 0; i < 5; i++) {
 			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0 && handAlive_[i]) {
-					breakTime_ = hand_[select_];
-					handAlive_[select_] = false;
-					break;
+				breakTime_ = hand_[select_];
+				handAlive_[select_] = false;
+				
 			}
 		}
 	}
+
+	
 }
 
 void Card::TutolialCpu() {
@@ -152,5 +158,44 @@ void Card::Calculation() {
 
 			}
 		}
+	}
+}
+//描画
+void Card::Draw() {
+	for (int i = 0; i < 5; i++) {
+
+
+		for (int j = 0; j < 10; j++) {
+
+			if (hand_[i] == j + 1) {
+				if (hand_[select_] == j + 1) {
+					Novice::DrawSprite(300 + 130 * i, 450, textureHandle_[j], 0.5f, 0.5f, 0.0f, WHITE);
+					if (handAlive_[i] == 0) { Novice::DrawSprite(300 + 130 * i, 450, dark_, 0.5f, 0.5f, 0.0f, WHITE); }
+				}
+				else {
+					Novice::DrawSprite(300 + 130 * i, 470, textureHandle_[j], 0.5f, 0.5f, 0.0f, WHITE);
+					if (handAlive_[i] == 0) {
+						Novice::DrawSprite(300 + 130 * i, 470, dark_, 0.5f, 0.5f, 0.0f, WHITE);
+					}
+				}
+
+
+			}
+			if (enemyHand_[i] == j + 1) {
+				if (enemytime_ == j + 1) {
+					Novice::DrawSprite(300 + 130 * i, 150, textureHandle_[j], 0.5f, 0.5f, 0.0f, WHITE);
+					if (enemyHandAlive[i] == 0) { Novice::DrawSprite(300 + 130 * i, 150, dark_, 0.5f, 0.5f, 0.0f, WHITE); }
+				}
+				else {
+					Novice::DrawSprite(300 + 130 * i, 100, textureHandle_[j], 0.5f, 0.5f, 0.0f, WHITE);
+					if (enemyHandAlive[i] == 0) {
+						Novice::DrawSprite(300 + 130 * i, 100, dark_, 0.5f, 0.5f, 0.0f, WHITE);
+					}
+				}
+
+
+			}
+		}
+
 	}
 }
