@@ -1,6 +1,23 @@
 ﻿#pragma once
 #include"Card.h"
 
+enum class Phase
+{
+	TITLE,
+	TUTORIAL,
+	PRE,
+	GAMES,
+	ENDGAME
+};
+
+enum class GamePhase {
+	DROW,
+	SELECT,
+	PLAY,
+	WLF,
+
+};
+
 class IScene
 {
 public:
@@ -11,22 +28,7 @@ public:
 	void Draw();
 private:
 	Card* card_ = nullptr;
-	Phase phase_;
-	GamePhase gamePhase_;
+	Phase phase_ = Phase::TITLE;
+	GamePhase gamePhase_ = GamePhase::DROW;
 };
 
-enum class Phase
-{
-	TITLE,
-	TUTORIAL,
-	PRE,
-	GAMES,
-	ENDGAME
-};
-enum class GamePhase {
-	DROW,
-	SELECT,
-	PLAY,
-	WLF,
-
-};

@@ -77,5 +77,23 @@ void IScene::GameRun() {
 }
 
 void IScene::Draw() {
+	switch (phase_)
+	{
+	case Phase::TITLE:
+		
+		break;
+	case Phase::TUTORIAL:
+		card_->Draw();
+		break;
+	case Phase::PRE:
+		card_->Draw();
+		break;
+	case Phase::GAMES:
+		card_->Draw();
+		break;
+	case Phase::ENDGAME:
 
+		break;
+
+	}
 }
