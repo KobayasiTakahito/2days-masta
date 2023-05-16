@@ -12,7 +12,7 @@ public:
 	void Cpu();
 	bool Calculation();
 	void Draw();
-	void NumDraw();
+	void NumDraw(int number);
 private:
 	static const int maxNum = 10;
 	static const int handNum = 5;

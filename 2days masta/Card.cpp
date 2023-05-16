@@ -196,8 +196,8 @@ bool Card::Calculation() {
 }
 //描画
 
-void Card::NumDraw() {
-	int num = time_;
+void Card::NumDraw(int number) {
+	int num = number;
 	int eachNumber[2] = {};
 	if (num < 0) {
 		num = 0;
@@ -211,7 +211,7 @@ void Card::NumDraw() {
 }
 
 void Card::Draw() {
-	Card::NumDraw();
+	Card::NumDraw(Card::time_);
 	for (int i = 0; i < 5; i++) {
 
 
