@@ -1,6 +1,11 @@
 ﻿#include "IScene.h"
 #include <Novice.h>
 #include"Card.h"
+IScene::IScene() {
+	textureHandle_ = Novice::LoadTexture("./Resources./back.png");
+	title_ = Novice::LoadTexture("./Resources./title.png");
+	moji_ = Novice::LoadTexture("./Resources./moji.png");
+}
 
 IScene::~IScene() {
 	delete card_;
@@ -11,6 +16,7 @@ void IScene::Initialize() {
 	card_->Initialize();
 	phase_ = Phase::TITLE;
 	gamePhase_ = GamePhase::DROW;
+	
 }
 
 void IScene::Run() {
@@ -41,7 +47,13 @@ void IScene::Run() {
 
 		break;
 	case Phase::ENDGAME:
-
+		delete card_;
+		if (keys[DIK_W] && preKeys[DIK_W] == 0) {
+			phase_ = Phase::TITLE;
+		}
+		if (keys[DIK_S] && preKeys[DIK_S] == 0) {
+			phase_ = Phase::TITLE;
+		}
 		break;
 	
 	}
@@ -83,17 +95,32 @@ void IScene::GameRun() {
 		}
 		break;
 	case GamePhase::WLF:
-		//Novice::ScreenPrintf(10, 10, "aaaaaaa");
+
+
+
+		if (phase_ == Phase::TUTORIAL) {
+			if (keys[DIK_W] && preKeys[DIK_W] == 0) {
+				phase_ = Phase::ENDGAME;
+			}
+		}
+		if (phase_ == Phase::PRE) {
+			if (keys[DIK_W] && preKeys[DIK_W] == 0) {
+				phase_ = Phase::ENDGAME;
+			}
+		}
+		
 		break;
 
 	}
 }
 
 void IScene::Draw() {
+	Novice::DrawSprite(0, 0, textureHandle_, 2.0f, 1.8f, 0.0f, WHITE);
 	switch (phase_)
 	{
 	case Phase::TITLE:
-		
+		Novice::DrawSprite(380, 200, title_, 1.2f, 1.2f, 0.0f, WHITE);
+		Novice::DrawSprite(420, 400, moji_, 1.0f, 1.0f, 0.0f, WHITE);
 		break;
 	case Phase::TUTORIAL:
 		card_->Draw();
