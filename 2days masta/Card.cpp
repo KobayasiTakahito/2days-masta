@@ -28,9 +28,20 @@ void Card::Initialize() {
 	textureHandle_[7] = Novice::LoadTexture("./Resources./card8.png");
 	textureHandle_[8] = Novice::LoadTexture("./Resources./card9.png");
 	textureHandle_[9] = Novice::LoadTexture("./Resources./card10.png");
+
+	numberCard[0] = Novice::LoadTexture("./Resources./num0.png");
+	numberCard[1] = Novice::LoadTexture("./Resources./num1.png");
+	numberCard[2] = Novice::LoadTexture("./Resources./num2.png");
+	numberCard[3] = Novice::LoadTexture("./Resources./num3.png");
+	numberCard[4] = Novice::LoadTexture("./Resources./num4.png");
+	numberCard[5] = Novice::LoadTexture("./Resources./num5.png");
+	numberCard[6] = Novice::LoadTexture("./Resources./num6.png");
+	numberCard[7] = Novice::LoadTexture("./Resources./num7.png");
+	numberCard[8] = Novice::LoadTexture("./Resources./num8.png");
+	numberCard[9] = Novice::LoadTexture("./Resources./num9.png");
 	dark_ = Novice::LoadTexture("./Resources./dark.png");
 	//
-
+	select_ = 0;
 	time_ = 12;
 	end_ = handNum;
 	breakTime_ = 0;
@@ -95,25 +106,29 @@ bool Card::Select() {
 	}
 	if (hand_[select_] > 0) {
 		//決定
-		for (int i = 0; i < 5; i++) {
-			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0 && handAlive_[i]) {
+		
+			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0 && handAlive_[select_]) {
 				breakTime_ = hand_[select_];
 				handAlive_[select_] = false;
 				return true;
 			}
-		}
+		
 	}
 	return false;
 }
 
 void Card::TutolialCpu() {
 	int top = 0;
+	while (enemyHandAlive[top] == false) {
+		top++;
+		
+	}
 	enemytime_ = enemyHand_[top];
 	enemyHandAlive[top] = false;
-	top++;
+	
 }
 //計算
-void Card::Calculation() {
+bool Card::Calculation() {
 	//午後
 	if (time_ >= 12) {
 		if (breakTime_ > enemytime_) {
@@ -134,33 +149,53 @@ void Card::Calculation() {
 	}
 	if (time_ >= 24) {
 		winF_ = true;
-
+		return true;
 	}
 	else if (time_ <= 0) {
 		loseF_ = true;
-
+		return true;
 	}
 	for (int i = 0; i < 5; i++) {
 
 		if (handAlive_[i] == false) {
 			end_ += 1;
 		}
-		else { break; }
-
+		else {  
+			end_ = 0;
+			break; 
+		}
+	}
 		if (end_ == 5) {
 			if (time_ <= 12) {
 				loseF_ = true;
-
+				return true;
 			}
 			else if (time_ > 12) {
 				winF_ = true;
-
+				return true;
 			}
 		}
-	}
+	
+	return false;
 }
 //描画
+
+void Card::NumDraw() {
+	int num = time_;
+	int eachNumber[2] = {};
+	if (num < 0) {
+		num = 0;
+	}
+	Novice::DrawSprite(550, 350, numberCard[num/10], 1.0f, 1.0f, 0.0f, WHITE);
+	eachNumber[1] = num / 10;
+	num = num % 10;
+	Novice::DrawSprite(600, 350, numberCard[num], 1.0f, 1.0f, 0.0f, WHITE);
+	eachNumber[0] = num / 1;
+	num = num % 1;
+}
+
 void Card::Draw() {
+	Card::NumDraw();
 	for (int i = 0; i < 5; i++) {
 
 
@@ -182,13 +217,13 @@ void Card::Draw() {
 			}
 			if (enemyHand_[i] == j + 1) {
 				if (enemytime_ == j + 1) {
-					Novice::DrawSprite(300 + 130 * i, 150, textureHandle_[j], 0.5f, 0.5f, 0.0f, WHITE);
-					if (enemyHandAlive[i] == 0) { Novice::DrawSprite(300 + 130 * i, 150, dark_, 0.5f, 0.5f, 0.0f, WHITE); }
+					Novice::DrawSprite(300 + 130 * i, 100, textureHandle_[j], 0.5f, 0.5f, 0.0f, WHITE);
+					if (enemyHandAlive[i] == 0) { Novice::DrawSprite(300 + 130 * i, 100, dark_, 0.5f, 0.5f, 0.0f, WHITE); }
 				}
 				else {
-					Novice::DrawSprite(300 + 130 * i, 100, textureHandle_[j], 0.5f, 0.5f, 0.0f, WHITE);
+					Novice::DrawSprite(300 + 130 * i, 80, textureHandle_[j], 0.5f, 0.5f, 0.0f, WHITE);
 					if (enemyHandAlive[i] == 0) {
-						Novice::DrawSprite(300 + 130 * i, 100, dark_, 0.5f, 0.5f, 0.0f, WHITE);
+						Novice::DrawSprite(300 + 130 * i, 80, dark_, 0.5f, 0.5f, 0.0f, WHITE);
 					}
 				}
 

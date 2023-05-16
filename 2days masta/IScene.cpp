@@ -67,10 +67,16 @@ void IScene::GameRun() {
 
 		break;
 	case GamePhase::PLAY:
-
+		card_->TutolialCpu();
+		if (card_->Calculation()) {
+			gamePhase_ = GamePhase::WLF;
+		}
+		else{
+			gamePhase_ = GamePhase::SELECT;
+		}
 		break;
 	case GamePhase::WLF:
-
+		//Novice::ScreenPrintf(10, 10, "aaaaaaa");
 		break;
 
 	}

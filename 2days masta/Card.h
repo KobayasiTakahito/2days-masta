@@ -8,14 +8,15 @@ public:
 	void Distibute();
 	bool Select();
 	void TutolialCpu();
-	void Calculation();
+	bool Calculation();
 	void Draw();
+	void NumDraw();
 private:
 	static const int maxNum = 10;
 	static const int handNum = 5;
 	int number_[maxNum];
 	int textureHandle_[maxNum];
-	
+	int numberCard[10];
 	//手札
 	int hand_[handNum];
 	int handAlive_[handNum];
