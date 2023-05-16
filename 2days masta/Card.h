@@ -2,7 +2,8 @@
 class Card
 {
 public:
-	
+	Card();
+
 	void Initialize();
 	void Shuffile();
 	void Distibute();

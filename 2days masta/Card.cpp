@@ -3,20 +3,7 @@
 #include<Novice.h>
 #include<time.h>
 
-
-void Card::Initialize() {
-	
-	//手持ち
-	for (int i = 0; i < 5; i++) {
-		handAlive_[i] = false;
-		enemyHandAlive[i] = false;
-		hand_[i] = 0;
-		enemyHand_[i] = 0;
-	}
-	//ナンバー
-	for (int i = 0; i < 10; i++) {
-		number_[i] = i + 1;
-	}
+Card::Card() {
 	//テクスチャ
 	textureHandle_[0] = Novice::LoadTexture("./Resources./card1.png");
 	textureHandle_[1] = Novice::LoadTexture("./Resources./card2.png");
@@ -40,6 +27,22 @@ void Card::Initialize() {
 	numberCard[8] = Novice::LoadTexture("./Resources./num8.png");
 	numberCard[9] = Novice::LoadTexture("./Resources./num9.png");
 	dark_ = Novice::LoadTexture("./Resources./dark.png");
+}
+
+void Card::Initialize() {
+	
+	//手持ち
+	for (int i = 0; i < 5; i++) {
+		handAlive_[i] = false;
+		enemyHandAlive[i] = false;
+		hand_[i] = 0;
+		enemyHand_[i] = 0;
+	}
+	//ナンバー
+	for (int i = 0; i < 10; i++) {
+		number_[i] = i + 1;
+	}
+	
 	//
 	select_ = 0;
 	time_ = 12;

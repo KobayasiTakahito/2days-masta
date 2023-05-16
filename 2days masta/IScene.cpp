@@ -5,6 +5,7 @@ IScene::IScene() {
 	textureHandle_ = Novice::LoadTexture("./Resources./back.png");
 	title_ = Novice::LoadTexture("./Resources./title.png");
 	moji_ = Novice::LoadTexture("./Resources./moji.png");
+	card_ = new Card;
 }
 
 IScene::~IScene() {
@@ -12,11 +13,9 @@ IScene::~IScene() {
 }
 
 void IScene::Initialize() {
-	card_ = new Card;
 	card_->Initialize();
 	phase_ = Phase::TITLE;
 	gamePhase_ = GamePhase::DROW;
-	
 }
 
 void IScene::Run() {
@@ -29,11 +28,11 @@ void IScene::Run() {
 	{
 	case Phase::TITLE:
 		if (keys[DIK_W] && preKeys[DIK_W] == 0) {
-			card_->Initialize();
+			IScene::Initialize();
 			phase_ = Phase::TUTORIAL;
 		}
 		if (keys[DIK_S] && preKeys[DIK_S] == 0) {
-			card_->Initialize();
+			IScene::Initialize();
 			phase_ = Phase::PRE;
 		}
 		break;
@@ -47,13 +46,11 @@ void IScene::Run() {
 
 		break;
 	case Phase::ENDGAME:
-		delete card_;
-		if (keys[DIK_W] && preKeys[DIK_W] == 0) {
+		
+		if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
 			phase_ = Phase::TITLE;
 		}
-		if (keys[DIK_S] && preKeys[DIK_S] == 0) {
-			phase_ = Phase::TITLE;
-		}
+		
 		break;
 	
 	}
