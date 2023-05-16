@@ -32,7 +32,7 @@ void IScene::Run() {
 		}
 		break;
 	case Phase::TUTORIAL:
-		
+		IScene::GameRun();
 		break;
 	case Phase::PRE:
 		IScene::GameRun();
@@ -60,14 +60,21 @@ void IScene::GameRun() {
 		card_->Distibute();
 		gamePhase_ = GamePhase::SELECT;
 		break;
+
 	case GamePhase::SELECT:
 		if (card_->Select()) {
 			gamePhase_ = GamePhase::PLAY;
 		}
-
 		break;
+
 	case GamePhase::PLAY:
-		card_->TutolialCpu();
+		if (phase_ == Phase::TUTORIAL) {
+			card_->TutolialCpu();
+		}
+		if (phase_ == Phase::PRE) {
+			card_->Cpu();
+		}
+
 		if (card_->Calculation()) {
 			gamePhase_ = GamePhase::WLF;
 		}

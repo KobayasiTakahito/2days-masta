@@ -8,6 +8,7 @@ public:
 	void Distibute();
 	bool Select();
 	void TutolialCpu();
+	void Cpu();
 	bool Calculation();
 	void Draw();
 	void NumDraw();

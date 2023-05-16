@@ -127,6 +127,19 @@ void Card::TutolialCpu() {
 	enemyHandAlive[top] = false;
 	
 }
+void Card::Cpu() {
+	srand(static_cast<int>(time(nullptr)));
+	int j;
+	for (int i = 0;i<5;i++)
+	{
+		j = rand() % 5;
+		if (enemyHandAlive[j]) {
+			enemytime_ = enemyHand_[j];
+			enemyHandAlive[j] = false;
+			break;
+		}
+	}
+}
 //計算
 bool Card::Calculation() {
 	//午後
