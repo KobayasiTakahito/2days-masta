@@ -217,13 +217,13 @@ void Card::Draw() {
 			}
 			if (enemyHand_[i] == j + 1) {
 				if (enemytime_ == j + 1) {
-					Novice::DrawSprite(300 + 130 * i, 100, textureHandle_[j], 0.5f, 0.5f, 0.0f, WHITE);
-					if (enemyHandAlive[i] == 0) { Novice::DrawSprite(300 + 130 * i, 100, dark_, 0.5f, 0.5f, 0.0f, WHITE); }
+					Novice::DrawSprite(300 + 130 * i, 50, textureHandle_[j], 0.5f, 0.5f, 0.0f, WHITE);
+					if (enemyHandAlive[i] == 0) { Novice::DrawSprite(300 + 130 * i, 50, dark_, 0.5f, 0.5f, 0.0f, WHITE); }
 				}
 				else {
-					Novice::DrawSprite(300 + 130 * i, 80, textureHandle_[j], 0.5f, 0.5f, 0.0f, WHITE);
+					Novice::DrawSprite(300 + 130 * i, 0, textureHandle_[j], 0.5f, 0.5f, 0.0f, WHITE);
 					if (enemyHandAlive[i] == 0) {
-						Novice::DrawSprite(300 + 130 * i, 80, dark_, 0.5f, 0.5f, 0.0f, WHITE);
+						Novice::DrawSprite(300 + 130 * i, 0, dark_, 0.5f, 0.5f, 0.0f, WHITE);
 					}
 				}
 
