@@ -194,6 +194,14 @@ bool Card::Calculation() {
 	
 	return false;
 }
+
+bool Card::WinLose() {
+	if (winF_) {
+		return true;
+	}
+	return false;
+}
+
 //描画
 
 void Card::NumDraw(int number) {

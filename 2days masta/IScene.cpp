@@ -5,6 +5,8 @@ IScene::IScene() {
 	textureHandle_ = Novice::LoadTexture("./Resources./back.png");
 	title_ = Novice::LoadTexture("./Resources./title.png");
 	moji_ = Novice::LoadTexture("./Resources./moji.png");
+	Win_ = Novice::LoadTexture("./Resources./win.png");
+	Lose_ = Novice::LoadTexture("./Resources./Lose.png");
 	card_ = new Card;
 }
 
@@ -16,6 +18,17 @@ void IScene::Initialize() {
 	card_->Initialize();
 	phase_ = Phase::TITLE;
 	gamePhase_ = GamePhase::DROW;
+	
+}
+bool IScene::Time() {
+	static int t = 30;
+	t--;
+	if (t == 0) {
+		t = 30;
+		return true;
+	}
+	return false;
+
 }
 
 void IScene::Run() {
@@ -47,9 +60,13 @@ void IScene::Run() {
 		break;
 	case Phase::ENDGAME:
 		
-		if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
-			phase_ = Phase::TITLE;
-		}
+		
+
+			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0 && IScene::Time()) {
+				phase_ = Phase::TITLE;
+			}
+			
+		
 		
 		break;
 	
@@ -92,19 +109,8 @@ void IScene::GameRun() {
 		}
 		break;
 	case GamePhase::WLF:
-
-
-
-		if (phase_ == Phase::TUTORIAL) {
-			if (keys[DIK_W] && preKeys[DIK_W] == 0) {
-				phase_ = Phase::ENDGAME;
-			}
-		}
-		if (phase_ == Phase::PRE) {
-			if (keys[DIK_W] && preKeys[DIK_W] == 0) {
-				phase_ = Phase::ENDGAME;
-			}
-		}
+		phase_ = Phase::ENDGAME;
+		
 		
 		break;
 
@@ -129,7 +135,12 @@ void IScene::Draw() {
 		card_->Draw();
 		break;
 	case Phase::ENDGAME:
-
+		if (card_->WinLose()) {
+			Novice::DrawSprite(380, 200, Win_, 1.2f, 1.2f, 0.0f, WHITE);
+		}
+		else {
+			Novice::DrawSprite(380, 200, Lose_, 1.2f, 1.2f, 0.0f, WHITE);
+		}
 		break;
 
 	}

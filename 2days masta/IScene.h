@@ -27,6 +27,7 @@ public:
 	void Run();
 	void GameRun();
 	void Draw();
+	bool Time();
 private:
 	Card* card_ = nullptr;
 	Phase phase_ = Phase::TITLE;
@@ -34,5 +35,8 @@ private:
 	int textureHandle_;
 	int title_;
 	int moji_;
+	int Win_;
+	int Lose_;
+	
 };
 

@@ -13,6 +13,7 @@ public:
 	bool Calculation();
 	void Draw();
 	void NumDraw(int number);
+	bool WinLose();
 private:
 	static const int maxNum = 10;
 	static const int handNum = 5;
