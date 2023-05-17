@@ -18,6 +18,7 @@ void IScene::Initialize() {
 	card_->Initialize();
 	phase_ = Phase::TITLE;
 	gamePhase_ = GamePhase::DROW;
+	tPhase_ = TutolialPhase::CARD;
 	
 }
 bool IScene::Time() {
@@ -50,7 +51,8 @@ void IScene::Run() {
 		}
 		break;
 	case Phase::TUTORIAL:
-		IScene::GameRun();
+		IScene::TutoRun();
+		//IScene::GameRun();
 		break;
 	case Phase::PRE:
 		IScene::GameRun();
@@ -72,6 +74,53 @@ void IScene::Run() {
 	
 	}
 
+}
+bool IScene::TutoRun() {
+	char keys[256] = { 0 };
+	char preKeys[256] = { 0 };
+	memcpy(preKeys, keys, 256);
+	Novice::GetHitKeyStateAll(keys);
+	switch (tPhase_)
+	{
+	case TutolialPhase::CARD:
+		card_->Shuffile();
+		card_->Distibute();
+		if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
+			if (IScene::Time) {
+				tPhase_ = TutolialPhase::TIME;
+			}
+		}
+		break;
+	case TutolialPhase::TIME:
+		if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
+			if (IScene::Time) {
+				tPhase_ = TutolialPhase::SOUSA;
+			}
+		}
+		break;
+	case TutolialPhase::SOUSA:
+		if (IScene::Time) {
+			if (card_->Select()) {
+				tPhase_ = TutolialPhase::BATOL;
+			}
+		}
+		break;
+	case TutolialPhase::BATOL:
+		card_->TutolialCpu();
+		if (card_->Calculation()) {
+			tPhase_ = TutolialPhase::WL;
+		}
+		else {
+			tPhase_ = TutolialPhase::SOUSA;
+		}
+
+		break;
+	case TutolialPhase::WL:
+		phase_ = Phase::ENDGAME;
+		break;
+	
+	}
+	return false;
 }
 
 void IScene::GameRun() {
@@ -115,6 +164,31 @@ void IScene::GameRun() {
 		break;
 
 	}
+}
+
+void IScene::TutoDraw() {
+	switch (tPhase_)
+	{
+	case TutolialPhase::CARD:
+
+		break;
+	case TutolialPhase::TIME:
+
+		break;
+	case TutolialPhase::SOUSA:
+
+		break;
+	case TutolialPhase::BATOL:
+
+		break;
+	case TutolialPhase::WL:
+
+		break;
+
+	}
+
+
+
 }
 
 void IScene::Draw() {
