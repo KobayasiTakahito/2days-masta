@@ -42,6 +42,11 @@ private:
 	Phase phase_ = Phase::TITLE;
 	GamePhase gamePhase_ = GamePhase::DROW;
 	TutolialPhase tPhase_ = TutolialPhase::CARD;
+	int texnumber_;
+
+
+	int explanation_[10];
+	int carasu_;
 	int textureHandle_;
 	int title_;
 	int moji_;

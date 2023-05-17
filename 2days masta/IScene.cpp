@@ -7,6 +7,10 @@ IScene::IScene() {
 	moji_ = Novice::LoadTexture("./Resources./moji.png");
 	Win_ = Novice::LoadTexture("./Resources./win.png");
 	Lose_ = Novice::LoadTexture("./Resources./Lose.png");
+	carasu_ = Novice::LoadTexture("./Resources./pokemon.png");
+	explanation_[0] = Novice::LoadTexture("./Resources./explanation1.png");
+	explanation_[1] = Novice::LoadTexture("./Resources./explanation2.png");
+	explanation_[2] = Novice::LoadTexture("./Resources./explanation3.png");
 	card_ = new Card;
 }
 
@@ -19,13 +23,14 @@ void IScene::Initialize() {
 	phase_ = Phase::TITLE;
 	gamePhase_ = GamePhase::DROW;
 	tPhase_ = TutolialPhase::CARD;
+	texnumber_ = 0;
 	
 }
 bool IScene::Time() {
-	static int t = 30;
+	static int t = 18;
 	t--;
 	if (t == 0) {
-		t = 30;
+		t = 18;
 		return true;
 	}
 	return false;
@@ -75,6 +80,7 @@ void IScene::Run() {
 	}
 
 }
+//チュートリアル
 bool IScene::TutoRun() {
 	char keys[256] = { 0 };
 	char preKeys[256] = { 0 };
@@ -85,21 +91,25 @@ bool IScene::TutoRun() {
 	case TutolialPhase::CARD:
 		card_->Shuffile();
 		card_->Distibute();
-		if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
-			if (IScene::Time) {
-				tPhase_ = TutolialPhase::TIME;
-			}
-		}
+		tPhase_ = TutolialPhase::TIME;
+
 		break;
 	case TutolialPhase::TIME:
-		if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
-			if (IScene::Time) {
-				tPhase_ = TutolialPhase::SOUSA;
+		if (keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
+			if (IScene::Time()) {
+				texnumber_ += 1;
 			}
+
 		}
+		if (texnumber_ == 2 && keys[DIK_W] && preKeys[DIK_W] == 0) {
+			tPhase_ = TutolialPhase::SOUSA;
+		}
+		else if (texnumber_ == 2 && keys[DIK_S] && preKeys[DIK_S] == 0){
+			texnumber_ = 0;
+	}
 		break;
 	case TutolialPhase::SOUSA:
-		if (IScene::Time) {
+		if (IScene::Time()) {
 			if (card_->Select()) {
 				tPhase_ = TutolialPhase::BATOL;
 			}
@@ -167,10 +177,12 @@ void IScene::GameRun() {
 }
 
 void IScene::TutoDraw() {
+	Novice::DrawSprite(860, 350, explanation_[texnumber_], 0.6f, 0.6f, 0.0f, WHITE);
+	Novice::DrawSprite(1100, 400, carasu_, 0.8f, 0.8f, 0.0f, WHITE);
 	switch (tPhase_)
 	{
 	case TutolialPhase::CARD:
-
+		
 		break;
 	case TutolialPhase::TIME:
 
@@ -201,6 +213,7 @@ void IScene::Draw() {
 		break;
 	case Phase::TUTORIAL:
 		card_->Draw();
+		IScene::TutoDraw();
 		break;
 	case Phase::PRE:
 		card_->Draw();
