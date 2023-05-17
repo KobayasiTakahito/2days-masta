@@ -8,9 +8,19 @@ IScene::IScene() {
 	Win_ = Novice::LoadTexture("./Resources./win.png");
 	Lose_ = Novice::LoadTexture("./Resources./Lose.png");
 	carasu_ = Novice::LoadTexture("./Resources./pokemon.png");
+
 	explanation_[0] = Novice::LoadTexture("./Resources./explanation1.png");
 	explanation_[1] = Novice::LoadTexture("./Resources./explanation2.png");
 	explanation_[2] = Novice::LoadTexture("./Resources./explanation3.png");
+	explanation_[3] = Novice::LoadTexture("./Resources./explanation4.png");
+	explanation_[4] = Novice::LoadTexture("./Resources./explanation5.png");
+	explanation_[5] = Novice::LoadTexture("./Resources./explanation6.png");
+	explanation_[6] = Novice::LoadTexture("./Resources./explanation7.png");
+	explanation_[7] = Novice::LoadTexture("./Resources./explanation8.png");
+	explanation_[8] = Novice::LoadTexture("./Resources./explanation9.png");
+	explanation_[9] = Novice::LoadTexture("./Resources./explanation10.png");
+	explanation_[10] = Novice::LoadTexture("./Resources./pokemon.png");
+	plz_ = Novice::LoadTexture("./Resources./plz.png");
 	card_ = new Card;
 }
 
@@ -27,10 +37,10 @@ void IScene::Initialize() {
 	
 }
 bool IScene::Time() {
-	static int t = 18;
+	static int t = 8;
 	t--;
 	if (t == 0) {
-		t = 18;
+		t = 8;
 		return true;
 	}
 	return false;
@@ -69,10 +79,11 @@ void IScene::Run() {
 		
 		
 
-			if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0 && IScene::Time()) {
+		if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
+			if (IScene::Time()) {
 				phase_ = Phase::TITLE;
 			}
-			
+		}
 		
 		
 		break;
@@ -95,13 +106,16 @@ bool IScene::TutoRun() {
 
 		break;
 	case TutolialPhase::TIME:
-		if (keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
+		if (texnumber_ != 2 && keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
 			if (IScene::Time()) {
-				texnumber_ += 1;
+				if (texnumber_ != 10) {
+					texnumber_ += 1;
+				}
 			}
 
 		}
 		if (texnumber_ == 2 && keys[DIK_W] && preKeys[DIK_W] == 0) {
+			texnumber_ = 3;
 			tPhase_ = TutolialPhase::SOUSA;
 		}
 		else if (texnumber_ == 2 && keys[DIK_S] && preKeys[DIK_S] == 0){
@@ -109,7 +123,20 @@ bool IScene::TutoRun() {
 	}
 		break;
 	case TutolialPhase::SOUSA:
-		if (IScene::Time()) {
+		if (keys[DIK_SPACE] && !preKeys[DIK_SPACE]) {
+			if (IScene::Time()) {
+				if (texnumber_ != 10) {
+					texnumber_ += 1;
+				}
+			}
+		}
+		if (texnumber_ == 3) {
+			if (card_->Select()) {
+				tPhase_ = TutolialPhase::BATOL;
+			}
+		}
+		if (texnumber_ == 10) {
+			texnumber_ = 10;
 			if (card_->Select()) {
 				tPhase_ = TutolialPhase::BATOL;
 			}
@@ -185,10 +212,12 @@ void IScene::TutoDraw() {
 		
 		break;
 	case TutolialPhase::TIME:
-
+		Novice::DrawSprite(900, 270, plz_, 1.2f, 1.2f, 0.0f, WHITE);
 		break;
 	case TutolialPhase::SOUSA:
-
+		if (texnumber_ != 10) {
+			Novice::DrawSprite(900, 270, plz_, 1.2f, 1.2f, 0.0f, WHITE);
+		}
 		break;
 	case TutolialPhase::BATOL:
 
@@ -228,6 +257,7 @@ void IScene::Draw() {
 		else {
 			Novice::DrawSprite(380, 200, Lose_, 1.2f, 1.2f, 0.0f, WHITE);
 		}
+		Novice::DrawSprite(500, 400, plz_, 1.2f, 1.2f, 0.0f, WHITE);
 		break;
 
 	}

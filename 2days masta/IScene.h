@@ -45,13 +45,13 @@ private:
 	int texnumber_;
 
 
-	int explanation_[10];
+	int explanation_[11];
 	int carasu_;
 	int textureHandle_;
 	int title_;
 	int moji_;
 	int Win_;
 	int Lose_;
-	
+	int plz_;
 };
 
